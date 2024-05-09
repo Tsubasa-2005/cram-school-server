@@ -1,0 +1,17 @@
+{{ template "header" .}}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2">{{ .Message }}</h4>
+                </header>
+                <article class="card-body">
+                    <button onclick="window.location.href='/login'" class="btn btn-primary btn-lg btn-block">Login</button>
+                    <button onclick="window.location.href='/signup'" class="btn btn-secondary btn-lg btn-block">Signup</button>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+{{ template "footer" .}}

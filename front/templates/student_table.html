@@ -1,0 +1,37 @@
+{{define "studentTable"}}
+ <tr>
+        <td><div>{{ .ID }}　
+                <div>
+                    <input type="checkbox" id="studentCheckbox{{ .ID }}" name="student_id" value="{{ .ID }}" style="display: none;">
+                    <label for="studentCheckbox{{ .ID }}"></label>
+                </div>
+            </div>
+        </td>
+        <td><div>{{ .Name }}</div></td>
+        <td>
+            <div><div class="min-class">最大: {{ .MaxFirstClass }}</div>
+                <div>最小: {{ .MinFirstClass }}</div></div>
+        </td>
+        <td>
+            <div><div class="min-class">最大: {{ .MaxSecondClass }}</div>
+                <div>最小: {{ .MinSecondClass }}</div></div>
+        </td>
+        <td>
+            <div><div class="min-class">最大: {{ .MaxThirdClass }}</div>
+                <div>最小: {{ .MinThirdClass }}</div></div>
+        </td>
+        <td>
+            <form method="POST" action="/teacher/edit_student_class">
+                <input type="hidden" name="student_id" value="{{ .ID }}">
+                <button type="submit" class="btn btn-primary btn-block" onclick="setFormAction('/teacher/edit_student_class')">コマ変更</button>
+            </form>
+        </td>
+        <td>
+            <form method="POST" action="/teacher/delete_student">
+                <input type="hidden" name="student_id" value="{{ .ID }}">
+                <button type="submit" class="btn btn-danger btn-block" onclick="if(confirmDelete(event)) setFormAction('/teacher/delete_student')">削除</button>
+            </form>
+        </td>
+        <td><div><a href="/teacher/edit_student_name_password?student_id={{ .ID }}" class="btn btn-secondary btn-sm">編集</a></div></td>
+    </tr>
+{{end}}

@@ -1,0 +1,10 @@
+{{ template "header" .}}
+<h4>Edit Teacher Name and Password</h4>
+<form method="POST" action="/teacher/edit_teacher_name_password?teacher_id={{ .ID }}">
+    <label for="new_name">New Name:</label><br>
+    <input type="text" id="new_name" name="new_name" value="{{ .Name }}"><br>
+    <label for="new_password">New Password:</label><br>
+    <input type="password" id="new_password" name="new_password" value="{{ .Password }}"><br>
+    <input type="submit" value="Submit">
+</form>
+{{ template "footer" .}}

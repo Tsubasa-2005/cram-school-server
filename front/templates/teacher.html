@@ -1,0 +1,400 @@
+{{ template "header" .}}
+<style>
+    .btn-stylish {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid #0056b3;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    .btn-stylish:hover {
+        background-color: #0056b3;
+        border: 2px solid #007bff;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+    .edit-class {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid #0056b3;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .edit-class:hover {
+        background-color: #0056b3;
+        border: 2px solid #007bff;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    table td {
+        text-align: center;
+    }
+
+    table td div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .min-class {
+        margin-right: 10px;
+    }
+    input[type="checkbox"] {
+            appearance: none;
+            background-color: #fafafa;
+            border: 2px solid #808080; /* Change to desired border color */
+            padding: 10px;
+            border-radius: 3px;
+            display: inline-block;
+            position: relative;
+        }
+
+    input[type="checkbox"]:checked {
+        background-color: #808080; /* Change to desired background color */
+        border-color: #808080; /* Change to desired border color */
+    }
+
+    input[type="checkbox"]:checked:after {
+        content: '\2714';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        font-size: 10px;
+        text-align: center;
+        width: 100%;
+    }
+    #selectStudentsButton {
+        background-color: #007bff; /* Change to desired background color */
+        color: #fff; /* Change to desired text color */
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid #0056b3; /* Change to desired border color */
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+    }
+
+    #selectStudentsButton:hover {
+        background-color: #0056b3; /* Change to desired hover background color */
+        border: 2px solid #007bff; /* Change to desired hover border color */
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+</style>
+<div class="container">
+    <h4>{{ .Message }}</h4>
+    <h5>Students</h5>
+    <button id="selectStudentsButton" onclick="showCheckboxes()">生徒をまとめて選択</button>
+    <form id="studentSelectionForm" method="post">
+        {{ $students := .Students }}
+
+        <p>小1</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'a' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>小2</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'b' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>小3</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'c' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>小4</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'd' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>小5</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'e' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>小6</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'f' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>中1</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'g' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>中2</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'h' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>中3</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'i' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <p>その他の学年</p>
+        <table class="table table-striped table-bordered">
+        <tr>
+            <th><div>生徒番号</div></th>
+            <th><div>名前</div></th>
+            <th><div>1次募集</div></th>
+            <th><div>2次募集</div></th>
+            <th><div>3次募集</div></th>
+            <th><div>コマ変更</div></th>
+            <th><div>削除</div></th>
+            <th><div>編集</div></th>
+        </tr>
+        {{ range $students }}
+            {{ if eq (index .ID 0) 'j' }}
+                {{ template "studentTable" . }}
+            {{ end }}
+        {{ end }}
+        </table>
+        <button id="bulkEditButton" type="submit" class="btn btn-primary btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/edit_student_class')">まとめてコマ変更</button>
+        <button id="bulkDeleteButton" type="submit" class="btn btn-danger btn-block" style="display: none;" disabled onclick="if(confirmDelete(event)) setFormAction('/teacher/delete_student')">まとめて削除</button>
+    </form>
+    </form>
+    <h5>1次募集編集</h5>
+    {{ if .Err1 }}
+    <a href="/teacher/create_form?form_id=1" class="btn btn-primary btn-sm edit-class">1次募集フォーム作成</a>
+    {{ else }}
+    <a href="/teacher/edit_form?form_id=1" class="btn btn-primary btn-sm edit-class">1次募集フォーム編集</a>
+    <a href="/teacher/delete_form?form_id=1" class="btn btn-danger btn-sm edit-class" onclick="return confirm('フォームを削除するとこれまでに生徒が予約したデータも削除されますが削除しますか？');">1次募集フォーム削除</a>
+    {{ end }}
+    <h5>2次募集編集</h5>
+    {{ if .Err2 }}
+    <a href="/teacher/create_form?form_id=2" class="btn btn-primary btn-sm edit-class">2次募集フォーム作成</a>
+    {{ else }}
+    <a href="/teacher/edit_form?form_id=2" class="btn btn-primary btn-sm edit-class">2次募集フォーム編集</a>
+    <a href="/teacher/delete_form?form_id=2" class="btn btn-danger btn-sm edit-class" onclick="return confirm('フォームを削除するとこれまでに生徒が予約したデータも削除されますが削除しますか？');">2次募集フォーム削除</a>
+    {{ end }}
+    <h5>3次募集編集</h5>
+    {{ if .Err3 }}
+    <a href="/teacher/create_form?form_id=3" class="btn btn-primary btn-sm edit-class">3次募集フォーム作成</a>
+    {{ else }}
+    <a href="/teacher/edit_form?form_id=3" class="btn btn-primary btn-sm edit-class">3次募集フォーム編集</a>
+    <a href="/teacher/delete_form?form_id=3" class="btn btn-danger btn-sm edit-class" onclick="return confirm('フォームを削除するとこれまでに生徒が予約したデータも削除されますが削除しますか？');">3次募集フォーム削除</a>
+    {{ end }}
+    <h5>Teachers</h5>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>教師番号</th>
+            <th>名前</th>
+            <th>削除</th>
+            <th>編集</th>
+        </tr>
+        {{ range .Teachers }}
+        <tr>
+            <td>{{ .ID }}</td>
+            <td>{{ .Name }}</td>
+            <td><a href="/teacher/delete_teacher?teacher_id={{ .ID }}" onclick="confirmDelete(event)" class="btn btn-danger btn-sm">削除</a></td>
+            <td><a href="/teacher/edit_teacher_name_password?teacher_id={{ .ID }}" class="btn btn-secondary btn-sm">編集</a></td>
+        </tr>
+        {{ end }}
+    </table>
+</div>
+{{ template "footer" .}}
+<script>
+    function confirmDelete(event) {
+        if (!confirm('Are you sure you want to delete this item?')) {
+            event.preventDefault();
+        }
+    }
+
+    function showCheckboxes() {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var bulkDeleteButton = document.getElementById('bulkDeleteButton');
+        var bulkEditButton = document.getElementById('bulkEditButton');
+
+        checkboxes.forEach(function(checkbox) {
+            if (checkbox.style.display === 'none') {
+                checkbox.style.display = 'block';
+            } else {
+                checkbox.style.display = 'none';
+            }
+        });
+
+        if (bulkDeleteButton.style.display === 'none') {
+            bulkDeleteButton.style.display = 'block';
+            bulkEditButton.style.display = 'block';
+        } else {
+            bulkDeleteButton.style.display = 'none';
+            bulkEditButton.style.display = 'none';
+        }
+    }
+
+    function setFormAction(url) {
+        var form = document.getElementById('studentSelectionForm');
+        form.action = url;
+    }
+
+    document.getElementById('studentSelectionForm').addEventListener('submit', function(e) {
+        // Prevent the form from submitting normally
+        e.preventDefault();
+
+        // Remove any existing hidden fields
+        var existingHiddenFields = document.querySelectorAll('input[name="selected_student_ids"]');
+        existingHiddenFields.forEach(function(field) {
+            field.remove();
+        });
+
+        // Get all checkboxes that are checked
+        var checkboxes = document.querySelectorAll('input[name="student_id"]:checked');
+        var selectedStudentIDs = Array.from(checkboxes).map(function(checkbox) {
+            return checkbox.value;
+        });
+
+        // For each selected student ID, create a hidden field and append it to the form
+        selectedStudentIDs.forEach(function(studentID) {
+            var hiddenField = document.createElement('input');
+            hiddenField.setAttribute('type', 'hidden');
+            hiddenField.setAttribute('name', 'selected_student_ids[]');
+            hiddenField.setAttribute('value', studentID);
+            e.target.appendChild(hiddenField);
+        });
+
+        // Submit the form
+        e.target.submit();
+    });
+
+    // Add event listener to all checkboxes
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+            if (checkedCheckboxes.length > 0) {
+                document.getElementById('bulkDeleteButton').disabled = false;
+                document.getElementById('bulkEditButton').disabled = false;
+            } else {
+                document.getElementById('bulkDeleteButton').disabled = true;
+                document.getElementById('bulkEditButton').disabled = true;
+            }
+        });
+    });
+
+</script>

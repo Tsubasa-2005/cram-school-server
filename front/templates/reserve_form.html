@@ -1,0 +1,16 @@
+{{ template "header" .}}
+<h4>{{ .Message }}</h4>
+<form method="POST" action="/student/reserve?form_id={{ .Form.ID }}">
+    <h5>{{ .Form.Name }}</h5>
+    {{ range .Dates }}
+    <div>
+        <label for="date_{{ . }}">{{ . }}</label>
+        <select id="date_{{ . }}" name="date_{{ . }}">
+            <option value="available">Available</option>
+            <option value="unavailable">Unavailable</option>
+        </select>
+    </div>
+    {{ end }}
+    <input type="submit" value="Submit">
+</form>
+{{ template "footer" .}}

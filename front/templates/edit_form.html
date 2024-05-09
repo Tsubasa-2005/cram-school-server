@@ -1,0 +1,148 @@
+{{ template "header" .}}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <header class="card-header">
+                    <h4 class="card-title mt-2">{{ .Message }}</h4>
+                </header>
+                <article class="card-body">
+                        <form method="POST" action="/teacher/edit_form?form_id={{ .Form.ID }}">
+                        <div class="form-group">
+                            <label for="new_name">この予約フォームの名前(例:1次募集)</label>
+                            <input type="text" id="new_name" name="new_name" value="{{.Form.Name}}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="start_date">予約受付開始日</label>
+                            <input type="date" id="start_date" name="start_date" value="{{ .Form.StartDate }}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="end_date">予約受付締め切り日</label>
+                            <input type="date" id="end_date" name="end_date" value="{{ .Form.EndDate }}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="reserve_start_date">予約期間開始日</label>
+                            <input type="date" id="reserve_start_date" name="reserve_start_date" value="{{ .Form.ReserveStartDate }}" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="reserve_end_date">予約期間終了日</label>
+                            <input type="date" id="reserve_end_date" name="reserve_end_date" value="{{ .Form.ReserveEndDate }}" required class="form-control">
+                        </div>
+                        <div id="exception_dates" class="form-group">
+                            <label for="exception_date1">予約を受け付けない日</label>
+                            <input type="date" id="exception_date1" name="exception_date" value="{{ .Form.ExceptionDate }}" class="form-control">
+                        </div>
+                        <button type="button" id="add_exception_date" class="btn btn-secondary">予約を受け付けない日を追加する</button>
+                        <button type="button" id="remove_exception_date" class="btn btn-secondary">予約を受け付けない日を消す</button>
+                        <div class="form-group">
+                            <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function validateExceptionDate(exceptionDateInput) {
+        var reserveStartDateInput = document.getElementById('reserve_start_date');
+        var reserveEndDateInput = document.getElementById('reserve_end_date');
+
+        if (reserveStartDateInput.value == "" || reserveEndDateInput.value == "") {
+            alert('予約期間を先に入力してください。');
+            exceptionDateInput.value = '';
+            return;
+        }
+
+        var reserveStartDate = new Date(reserveStartDateInput.value);
+        var reserveEndDate = new Date(reserveEndDateInput.value);
+        var exceptionDate = new Date(exceptionDateInput.value);
+
+        if (exceptionDate < reserveStartDate || exceptionDate > reserveEndDate) {
+            alert('予約を受け付けない日は、予約期間の開始日と終了日の間でなければなりません。');
+            exceptionDateInput.value = '';
+        }
+    }
+
+    document.getElementById('add_exception_date').addEventListener('click', function() {
+        var exceptionDatesDiv = document.getElementById('exception_dates');
+        var newExceptionDateDiv = document.createElement('div');
+        var newExceptionDateLabel = document.createElement('label');
+        var newExceptionDateInput = document.createElement('input');
+
+        newExceptionDateDiv.className = 'form-group removable'; // Add class to new div
+        newExceptionDateLabel.textContent = '予約を受け付けない日';
+        newExceptionDateLabel.htmlFor = 'exception_date';
+        newExceptionDateInput.type = 'date';
+        newExceptionDateInput.name = 'exception_date';
+        newExceptionDateInput.className = 'form-control';
+
+        newExceptionDateInput.addEventListener('input', function() {
+            validateExceptionDate(newExceptionDateInput);
+        });
+
+        newExceptionDateDiv.appendChild(newExceptionDateLabel);
+        newExceptionDateDiv.appendChild(newExceptionDateInput);
+        exceptionDatesDiv.appendChild(newExceptionDateDiv);
+    });
+    document.getElementById('remove_exception_date').addEventListener('click', function() {
+        var exceptionDatesDiv = document.getElementById('exception_dates');
+        var children = exceptionDatesDiv.children;
+        var removableCount = 0;
+
+        // Count the number of removable fields
+        for (var i = 0; i < children.length; i++) {
+            if (children[i].className === 'form-group removable') {
+                removableCount++;
+            }
+        }
+
+        // Only remove if there are more than one removable fields
+        if (removableCount > 0) {
+            for (var i = children.length - 1; i >= 0; i--) {
+                if (children[i].className === 'form-group removable') { // Only remove fields with 'removable' class
+                    exceptionDatesDiv.removeChild(children[i]); // Remove <div> which includes <label> and <input>
+                    break;
+                }
+            }
+        }
+    });
+    document.getElementById('exception_date1').addEventListener('input', function() {
+        validateExceptionDate(document.getElementById('exception_date1'));
+    });
+    function validateReserveDates() {
+        var startDate = new Date(document.getElementById('reserve_start_date').value);
+        var endDate = new Date(document.getElementById('reserve_end_date').value);
+
+        if (startDate > endDate) {
+            alert('予約期間の開始日は終了日よりも前でなければなりません。');
+            document.getElementById('reserve_start_date').value = '';
+            document.getElementById('reserve_end_date').value = '';
+            return false;
+        }
+        return true;
+    }
+
+    // 予約期間開始日と終了日のフィールドにinputイベントリスナーを追加
+    document.getElementById('reserve_start_date').addEventListener('input', validateReserveDates);
+    document.getElementById('reserve_end_date').addEventListener('input', validateReserveDates);
+
+    function validateDates() {
+        var startDate = new Date(document.getElementById('start_date').value);
+        var endDate = new Date(document.getElementById('end_date').value);
+
+        if (startDate > endDate) {
+            alert('開始日は締め切り日よりも前でなければなりません。');
+            document.getElementById('start_date').value = '';
+            document.getElementById('end_date').value = '';
+            return false;
+        }
+        return true;
+    }
+
+    // 開始日と締め切り日のフィールドにinputイベントリスナーを追加
+    document.getElementById('start_date').addEventListener('input', validateDates);
+    document.getElementById('end_date').addEventListener('input', validateDates);
+
+</script>
+{{ template "footer" .}}

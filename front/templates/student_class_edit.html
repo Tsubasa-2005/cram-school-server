@@ -1,0 +1,61 @@
+{{ template "header" .}}
+<script>
+    function validateMinMax(minId, maxId) {
+        var minElement = document.getElementById(minId);
+        var maxElement = document.getElementById(maxId);
+        var minValue = parseInt(minElement.value);
+        var maxValue = parseInt(maxElement.value);
+
+        if (minValue > maxValue) {
+            if(maxValue===0){
+                minElement.value = 0;
+            }
+            else{
+                minElement.value = maxValue-1;
+            }
+            alert("最小値は最大値より大きくすることはできません。");
+        }
+    }
+</script>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <article class="card-body">
+                    <form method="POST" action="/teacher/update_student_class">
+                        <h4>取得可能コマ数を変更してください</h4>
+                        <div class="form-group">
+                            <label for="max_first_class">1次募集(最大):</label>
+                            <input type="number" id="max_first_class" value="0" name="max_first_class"  onchange="validateMinMax('min_first_class', 'max_first_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="min_first_class">1次募集(最小):</label>
+                            <input type="number" id="min_first_class" value="0" name="min_first_class"  onchange="validateMinMax('min_first_class', 'max_first_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="max_second_class">2次募集(最大):</label>
+                            <input type="number" id="max_second_class" value="0" name="max_second_class" onchange="validateMinMax('min_second_class', 'max_second_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="min_second_class">2次募集(最小):</label>
+                            <input type="number" id="min_second_class" value="0" name="min_second_class" onchange="validateMinMax('min_second_class', 'max_second_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="max_third_class">3次募集(最大):</label>
+                            <input type="number" id="max_third_class" value="0" name="max_third_class" onchange="validateMinMax('min_third_class', 'max_third_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="min_third_class">3次募集(最小):</label>
+                            <input type="number" id="min_third_class" value="0" name="min_third_class" onchange="validateMinMax('min_third_class', 'max_third_class')" min="0" required class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input name="student_id" value="{{ .IDs }}">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+{{ template "footer" .}}

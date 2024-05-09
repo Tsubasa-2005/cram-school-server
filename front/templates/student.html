@@ -1,0 +1,67 @@
+{{ template "header" .}}
+<style>
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        margin-top: 50px;
+    }
+
+    .form-btn {
+        width: 200px;
+        text-align: center; /* 追加 */
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+        background-color: #007bff;
+        text-decoration: none;
+    }
+</style>
+<h4>{{ .Message }}</h4>
+<p>student</p>
+<div class="form-container">
+    <div>
+        {{ if .StartDate1 }}
+        {{ if .IsWithinReservePeriod1 }}
+        <button onclick="location.href='/student/reserve?form_id=1'" class="btn btn-primary btn-sm form-btn">1次募集</button>
+        <p>{{ .StartDate1 }} ~ {{ .EndDate1 }}</p>
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">1次募集</button>
+        <p>募集期間外です (募集期間 : {{ .StartDate1 }} ~ {{ .EndDate1 }})</p>
+        {{ end }}
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">1次募集</button>
+        <p>現在募集フォームは作られていません</p>
+        {{ end }}
+    </div>
+    <div>
+        {{ if .StartDate2 }}
+        {{ if .IsWithinReservePeriod2 }}
+        <button onclick="location.href='/student/reserve?form_id=2'" class="btn btn-primary btn-sm form-btn">2次募集</button>
+        <p>{{ .StartDate2 }} ~ {{ .EndDate2 }}</p>
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">2次募集</button>
+        <p>募集期間外です (募集期間 : {{ .StartDate2 }} ~ {{ .EndDate2 }})</p>
+        {{ end }}
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">2次募集</button>
+        <p>現在募集フォームは作られていません</p>
+        {{ end }}
+    </div>
+    <div>
+        {{ if .StartDate3 }}
+        {{ if .IsWithinReservePeriod3 }}
+        <button onclick="location.href='/student/reserve?form_id=3'" class="btn btn-primary btn-sm form-btn">3次募集</button>
+        <p>{{ .StartDate3 }} ~ {{ .EndDate3 }}</p>
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">3次募集</button>
+        <p>募集期間外です (募集期間 : {{ .StartDate3 }} ~ {{ .EndDate3 }})</p>
+        {{ end }}
+        {{ else }}
+        <button disabled class="btn btn-primary btn-sm form-btn">3次募集</button>
+        <p>現在募集フォームは作られていません</p>
+        {{ end }}
+    </div>
+</div>
+{{ template "footer" .}}
