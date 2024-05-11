@@ -33,40 +33,41 @@ func CreateTeacher(teacher Teacher) error {
 	return nil
 }
 
-func DeleteStudent(studentID string) error {
+func DeleteStudent(ID string) error {
 	db, err := infra.ConnectDB()
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	if err := db.Where("id = ?", studentID).Delete(&Student{}).Error; err != nil {
+	if err := db.Where("id = ?", ID).Unscoped().Delete(&Student{}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func DeleteTeacher(ID string) error {
+	db, err := infra.ConnectDB()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	if err := db.Where("id = ?", ID).Unscoped().Delete(&Teacher{}).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func DeleteTeacher(teacherID string) error {
+func UpdateStudentNameAndPassword(ID, newName, newPassword string) error {
 	db, err := infra.ConnectDB()
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	if err := db.Where("id = ?", teacherID).Delete(&Teacher{}).Error; err != nil {
-		return err
-	}
-	return nil
-}
-
-func UpdateStudentNameAndPassword(studentID, newName, newPassword string) error {
-	db, err := infra.ConnectDB()
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	if err := db.Model(&Student{}).Where("id = ?", studentID).Updates(Student{
+	if err := db.Model(&Student{}).Where("id = ?", ID).Updates(Student{
 		Name:     newName,
 		Password: newPassword,
 	}).Error; err != nil {
@@ -75,14 +76,14 @@ func UpdateStudentNameAndPassword(studentID, newName, newPassword string) error 
 	return nil
 }
 
-func UpdateTeacherNameAndPassword(teacherID, newName, newPassword string) error {
+func UpdateTeacherNameAndPassword(ID, newName, newPassword string) error {
 	db, err := infra.ConnectDB()
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	if err := db.Model(&Teacher{}).Where("id = ?", teacherID).Updates(Teacher{
+	if err := db.Model(&Teacher{}).Where("id = ?", ID).Updates(Teacher{
 		Name:     newName,
 		Password: newPassword,
 	}).Error; err != nil {
@@ -91,7 +92,7 @@ func UpdateTeacherNameAndPassword(teacherID, newName, newPassword string) error 
 	return nil
 }
 
-func EditStudentClass(studentID string, maxFirstClass, minFirstClass, maxSecondClass, minSecondClass, maxThirdClass, minThirdClass int, w http.ResponseWriter) error {
+func EditStudentClass(ID string, maxFirstClass, minFirstClass, maxSecondClass, minSecondClass, maxThirdClass, minThirdClass int, w http.ResponseWriter) error {
 	// Update the student record in the database.
 	db, err := infra.ConnectDB()
 	if err != nil {
@@ -100,7 +101,7 @@ func EditStudentClass(studentID string, maxFirstClass, minFirstClass, maxSecondC
 	defer db.Close()
 
 	student := &Student{}
-	if err := db.Model(student).Where("id = ?", studentID).Updates(Student{
+	if err := db.Model(student).Where("id = ?", ID).Updates(Student{
 		MaxFirstClass:  maxFirstClass,
 		MinFirstClass:  minFirstClass,
 		MaxSecondClass: maxSecondClass,

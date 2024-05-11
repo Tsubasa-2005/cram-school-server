@@ -25,7 +25,5 @@ func Migrate() {
 	}
 	db.AutoMigrate(&rdb.Teacher{})
 	db.AutoMigrate(&rdb.Form{})
-
-	//RESERVATION modelは後ほど追加
-	//db.AutoMigrate(&Reservation{})
+	db.AutoMigrate(&rdb.Reservation{})
 }

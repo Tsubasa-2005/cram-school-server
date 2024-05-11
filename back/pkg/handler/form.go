@@ -54,7 +54,7 @@ func EditForm(w http.ResponseWriter, rq *http.Request) {
 		}
 	} else if rq.Method == "POST" {
 		// Update the record in the database using the form data.
-		formID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
+		ID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
 		if err != nil {
 			http.Error(w, "Invalid form ID", http.StatusBadRequest)
 			return
@@ -68,7 +68,7 @@ func EditForm(w http.ResponseWriter, rq *http.Request) {
 
 		// Join the exception dates into a single string with a comma as the delimiter
 		exceptionDatesStr := strings.Join(exceptionDates, ",")
-		err = rdb.UpdateForm(formID, newName, startDate, endDate, reserveStartDate, reserveEndDate, exceptionDatesStr)
+		err = rdb.UpdateForm(ID, newName, startDate, endDate, reserveStartDate, reserveEndDate, exceptionDatesStr)
 		if err != nil {
 			http.Error(w, "Failed to update form", http.StatusInternalServerError)
 			return
@@ -94,20 +94,19 @@ func CreateForm(w http.ResponseWriter, rq *http.Request) {
 
 	if rq.Method == "GET" {
 		// Get the form ID from the query string.
-		formID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
+		ID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
 		if err != nil {
 			http.Error(w, "Invalid form ID", http.StatusBadRequest)
 			return
 		}
 		// Check if the formID already exists in the database
-		_, err = rdb.GetForm(formID)
+		_, err = rdb.GetForm(ID)
 		if err == nil {
 			// If the formID already exists, show an error message and return
 			http.Error(w, "The form ID is already in use. Please use a different ID.", http.StatusBadRequest)
 			return
 		}
-
-		form := &rdb.Form{ID: formID}
+		form := &rdb.Form{ID: ID}
 
 		// Render the edit form page with the form data.
 		item := struct {
@@ -129,7 +128,7 @@ func CreateForm(w http.ResponseWriter, rq *http.Request) {
 		}
 	} else if rq.Method == "POST" {
 		// Update the record in the database using the form data.
-		formID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
+		ID, err := strconv.Atoi(rq.URL.Query().Get("form_id"))
 		if err != nil {
 			http.Error(w, "Invalid form ID", http.StatusBadRequest)
 			return
@@ -143,7 +142,7 @@ func CreateForm(w http.ResponseWriter, rq *http.Request) {
 
 		// Join the exception dates into a single string with a comma as the delimiter
 		exceptionDatesStr := strings.Join(exceptionDates, ",")
-		err = rdb.CreateForm(formID, newName, startDate, endDate, reserveStartDate, reserveEndDate, exceptionDatesStr)
+		err = rdb.CreateForm(ID, newName, startDate, endDate, reserveStartDate, reserveEndDate, exceptionDatesStr)
 		if err != nil {
 			http.Error(w, "Failed to update form", http.StatusInternalServerError)
 			return
