@@ -278,7 +278,6 @@
         <button id="bulkEditButton" type="submit" class="btn btn-primary btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/edit_student_class')">まとめてコマ変更</button>
         <button id="bulkDeleteButton" type="submit" class="btn btn-danger btn-block" style="display: none;" disabled onclick="if(confirmDelete(event)) setFormAction('/teacher/delete_student')">まとめて削除</button>
     </form>
-    </form>
     <h5>1次募集編集</h5>
     {{ if .Err1 }}
     <a href="/teacher/create_form?form_id=1" class="btn btn-primary btn-sm edit-class">1次募集フォーム作成</a>
@@ -352,49 +351,20 @@
         var form = document.getElementById('studentSelectionForm');
         form.action = url;
     }
-
-    document.getElementById('studentSelectionForm').addEventListener('submit', function(e) {
-        // Prevent the form from submitting normally
-        e.preventDefault();
-
-        // Remove any existing hidden fields
-        var existingHiddenFields = document.querySelectorAll('input[name="selected_student_ids"]');
-        existingHiddenFields.forEach(function(field) {
-            field.remove();
-        });
-
-        // Get all checkboxes that are checked
-        var checkboxes = document.querySelectorAll('input[name="student_id"]:checked');
-        var selectedStudentIDs = Array.from(checkboxes).map(function(checkbox) {
-            return checkbox.value;
-        });
-
-        // For each selected student ID, create a hidden field and append it to the form
-        selectedStudentIDs.forEach(function(studentID) {
-            var hiddenField = document.createElement('input');
-            hiddenField.setAttribute('type', 'hidden');
-            hiddenField.setAttribute('name', 'selected_student_ids[]');
-            hiddenField.setAttribute('value', studentID);
-            e.target.appendChild(hiddenField);
-        });
-
-        // Submit the form
-        e.target.submit();
-    });
-
-    // Add event listener to all checkboxes
+    // Get all checkboxes and the submit button
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var bulkDeleteButton = document.getElementById('bulkDeleteButton');
+    var bulkEditButton = document.getElementById('bulkEditButton');
+
+    // Add an event listener to each checkbox
     checkboxes.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
-            var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
-            if (checkedCheckboxes.length > 0) {
-                document.getElementById('bulkDeleteButton').disabled = false;
-                document.getElementById('bulkEditButton').disabled = false;
-            } else {
-                document.getElementById('bulkDeleteButton').disabled = true;
-                document.getElementById('bulkEditButton').disabled = true;
-            }
+            // Check if at least one checkbox is checked
+            var checked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+            // Enable or disable the submit buttons based on whether a checkbox is checked
+            bulkDeleteButton.disabled = !checked;
+            bulkEditButton.disabled = !checked;
         });
     });
-
 </script>

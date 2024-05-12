@@ -1,16 +1,118 @@
 {{ template "header" .}}
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+    .styled-table thead tr {
+        background-color: #1a237e; /* ヘッダーの背景色を深い青色に変更 */
+        color: #ffffff;
+        text-align: left;
+    }
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        border-right: 1px solid #dddddd; /* 縦線を追加 */
+    }
+    .styled-table th:last-child,
+    .styled-table td:last-child {
+        border-right: none; /* 最後のセルの縦線を削除 */
+    }
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #e8eaf6; /* 偶数行の背景色を薄い青色に変更 */
+    }
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #1a237e; /* 最後の行の下線の色を深い青色に変更 */
+    }
+    [type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    /* チェックボックスの見た目をカスタマイズ */
+    [type="checkbox"] + label {
+        position: relative;
+        padding-left: 25px;
+        cursor: pointer;
+        font-size: 13px;
+        user-select: none;
+    }
+
+    [type="checkbox"] + label:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 18px;
+        height: 18px;
+        border: 1px solid #ddd;
+        background: #f0f0f0;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, .1);
+    }
+
+    /* チェックボックスがチェックされたときの見た目 */
+    [type="checkbox"]:checked + label:before {
+        background: #f35429;
+        border-color: #f35429;
+        box-shadow: none;
+    }
+    [type="checkbox"]:checked + label:after {
+        content: '';
+        position: absolute;
+        left: 6px;
+        top: 3px;
+        background: white;
+        width: 2px;
+        height: 2px;
+        box-shadow:
+                2px 0 0 white,
+                4px 0 0 white,
+                4px -2px 0 white,
+                4px -4px 0 white,
+                4px -6px 0 white,
+                4px -8px 0 white;
+        transform: rotate(45deg);
+    }
+</style>
 <h4>{{ .Message }}</h4>
 <form method="POST" action="/student/reserve?form_id={{ .Form.ID }}">
     <h5>{{ .Form.Name }}</h5>
-    {{ range .Dates }}
-    <div>
-        <label for="date_{{ . }}">{{ . }}</label>
-        <select id="date_{{ . }}" name="date_{{ . }}">
-            <option value="available">Available</option>
-            <option value="unavailable">Unavailable</option>
-        </select>
+    <div class="table-container">
+    <table class="styled-table">
+        <div class="table-container">
+        <thead>
+        <tr>
+            <th><div>日付</div></th>
+            <th><div>14:35~15:15</div></th>
+            <th><div>15:20~16:00</div></th>
+            <th><div>16:05~16:45</div></th>
+            <th><div>16:50~17:30</div></th>
+            <th><div>17:35~18:15</div></th>
+            <th><div>18:20~19:00</div></th>
+            <th><div>19:05~19:45</div></th>
+            <th><div>19:50~20:30</div></th>
+            <th><div>20:35~21:15</div></th>
+            <th><div>21:20~22:00</div></th>
+        </tr>
+        </thead>
+        </div>
+        <tbody>
+        {{ range .Dates }}
+        {{ template "reserveFormTable" . }}
+        {{ end }}
+        </tbody>
+    </table>
     </div>
-    {{ end }}
     <input type="submit" value="Submit">
 </form>
 {{ template "footer" .}}

@@ -35,7 +35,6 @@ func GetTeacher(teacherID string) (*Teacher, error) {
 	return &teacher, nil
 }
 
-// GetAllStudents retrieves all students from the database
 func GetAllStudents() ([]Student, error) {
 	db, err := infra.ConnectDB()
 	if err != nil {
@@ -50,7 +49,6 @@ func GetAllStudents() ([]Student, error) {
 	return students, nil
 }
 
-// GetAllTeachers retrieves all teachers from the database
 func GetAllTeachers() ([]Teacher, error) {
 	db, err := infra.ConnectDB()
 	if err != nil {
@@ -65,7 +63,6 @@ func GetAllTeachers() ([]Teacher, error) {
 	return teachers, nil
 }
 
-// GetForm retrieves a form from the database by its ID
 func GetForm(formID int) (*Form, error) {
 	db, err := gorm.Open("sqlite3", "data.sqlite3")
 	if err != nil {
@@ -79,4 +76,46 @@ func GetForm(formID int) (*Form, error) {
 	}
 
 	return &form, nil
+}
+
+func GetReservationsByFormIDAndStudentID(FormID int, StudentID string) ([]Reservation, error) {
+	db, err := infra.ConnectDB()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	var reservations []Reservation
+	if err := db.Where("form_id = ? AND student_id = ?", FormID, StudentID).Find(&reservations).Error; err != nil {
+		return nil, err
+	}
+	return reservations, nil
+}
+
+func GetReservationByFormIDAndStudentIDAndDate(FormID int, StudentID string, Date string) (*Reservation, error) {
+	db, err := infra.ConnectDB()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	var reservation Reservation
+	if err := db.Where("form_id = ? AND student_id = ? AND date = ?", FormID, StudentID, Date).First(&reservation).Error; err != nil {
+		return nil, err
+	}
+	return &reservation, nil
+}
+
+func GetReservationByFormIDAndDate(FormID int, Date string) ([]Reservation, error) {
+	db, err := infra.ConnectDB()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	var reservations []Reservation
+	if err := db.Where("form_id = ? AND date = ?", FormID, Date).Find(&reservations).Error; err != nil {
+		return nil, err
+	}
+	return reservations, nil
 }

@@ -28,7 +28,7 @@ func Student(w http.ResponseWriter, rq *http.Request) {
 	if err == nil {
 		startDate1 = form1.StartDate
 		endDate1 = form1.EndDate
-		startDate1, endDate1, isWithinReservePeriod1, err = rdb.ParseAndFormatDates(form1.ReserveStartDate, form1.ReserveEndDate)
+		startDate1, endDate1, isWithinReservePeriod1, err = rdb.FormatDate(form1.ReserveStartDate, form1.ReserveEndDate)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -41,7 +41,7 @@ func Student(w http.ResponseWriter, rq *http.Request) {
 	if err == nil {
 		startDate2 = form2.StartDate
 		endDate2 = form2.EndDate
-		startDate2, endDate2, isWithinReservePeriod2, err = rdb.ParseAndFormatDates(form2.ReserveStartDate, form2.ReserveEndDate)
+		startDate2, endDate2, isWithinReservePeriod2, err = rdb.FormatDate(form2.ReserveStartDate, form2.ReserveEndDate)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -54,7 +54,7 @@ func Student(w http.ResponseWriter, rq *http.Request) {
 	if err == nil {
 		startDate3 = form3.StartDate
 		endDate3 = form3.EndDate
-		startDate3, endDate3, isWithinReservePeriod3, err = rdb.ParseAndFormatDates(form3.ReserveStartDate, form3.ReserveEndDate)
+		startDate3, endDate3, isWithinReservePeriod3, err = rdb.FormatDate(form3.ReserveStartDate, form3.ReserveEndDate)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
@@ -99,7 +99,6 @@ func Student(w http.ResponseWriter, rq *http.Request) {
 }
 
 func DeleteStudent(w http.ResponseWriter, rq *http.Request) {
-	//log.Println("delete_student")
 	user := pkg.CheckLogin(w, rq)
 	if user == nil {
 		// Handle error here
@@ -110,26 +109,17 @@ func DeleteStudent(w http.ResponseWriter, rq *http.Request) {
 		// Handle error here
 		return
 	}
-	// リクエストボディからフォームデータを解析します
 	err := rq.ParseForm()
 	if err != nil {
-		// エラーハンドリング
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	studentIDs := rq.Form["student_id"]
+	log.Println(studentIDs)
 
-	// PostFormフィールドからstudent_idを取得します
-	studentIDs, ok := rq.PostForm["student_id"]
-	//log.Println(studentIDs)
-	if !ok {
-		// student_idが存在しない場合のエラーハンドリング
-		http.Error(w, "No student ID provided", http.StatusBadRequest)
-		return
-	}
-
+	log.Println("q")
 	// Delete the student record from the database.
 	for _, studentID := range studentIDs {
-		//log.Println(studentID)
+		log.Println(studentID)
 		err := rdb.DeleteStudent(studentID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -151,22 +141,13 @@ func EditStudentClass(w http.ResponseWriter, rq *http.Request) {
 		// Handle error here
 		return
 	}
-	// リクエストボディからフォームデータを解析します
+
 	err := rq.ParseForm()
 	if err != nil {
-		// エラーハンドリング
-		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	// PostFormフィールドからstudent_idを取得します
-	studentIDs, ok := rq.PostForm["student_id"]
-	if !ok {
-		// student_idが存在しない場合のエラーハンドリング
-		http.Error(w, "No student ID provided", http.StatusBadRequest)
-		return
-	}
-
+	studentIDs := rq.Form["student_id"]
+	log.Println(studentIDs)
 	var studentNames []string
 	for _, id := range studentIDs {
 		student, err := rdb.GetStudent(id)
