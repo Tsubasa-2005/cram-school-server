@@ -3,6 +3,8 @@ package main
 import (
 	"cram-school-reserve-server/back/infra/rdb"
 	"fmt"
+
+	"github.com/jinzhu/gorm"
 )
 
 func main() {
@@ -17,11 +19,31 @@ func main() {
 
 	// データベースに各学生を追加
 	for _, student := range students {
-		err := rdb.CreateStudent(student)
+		err := CreateStudent(student)
 		if err != nil {
 			fmt.Println("Error adding student:", err)
 		} else {
 			fmt.Println("Student added successfully:", student.Name)
 		}
 	}
+}
+
+func ConnectDB() (*gorm.DB, error) {
+	db, err := gorm.Open("sqlite3", "data.sqlite3")
+	if err != nil {
+		return nil, err
+	}
+	return db, nil
+}
+func CreateStudent(student rdb.Student) error {
+	db, err := ConnectDB()
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	if err := db.Create(&student).Error; err != nil {
+		return err
+	}
+	return nil
 }

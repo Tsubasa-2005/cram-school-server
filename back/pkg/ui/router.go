@@ -1,75 +1,68 @@
 package ui
 
 import (
+	"cram-school-reserve-server/back/infra"
 	"cram-school-reserve-server/back/pkg/handler"
-	"net/http"
+	"cram-school-reserve-server/back/pkg/util"
+
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 )
 
-func SetupRouter() {
-	// home
-	http.HandleFunc("/", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Home(w)
-	})
-	// signup handling.
-	http.HandleFunc("/signup", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Signup(w, rq)
-	})
-	// login handling.
-	http.HandleFunc("/login", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Login(w, rq)
-	})
-	// logout handling.
-	http.HandleFunc("/logout", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Logout(w, rq)
-	})
-	// student handling.
-	http.HandleFunc("/student", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Student(w, rq)
-	})
-	// teacher handling.
-	http.HandleFunc("/teacher", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Teacher(w, rq)
-	})
-	// delete_student handling.
-	http.HandleFunc("/teacher/delete_student", func(w http.ResponseWriter, rq *http.Request) {
-		handler.DeleteStudent(w, rq)
-	})
-	// edit_student_class handling.
-	http.HandleFunc("/teacher/edit_student_class", func(w http.ResponseWriter, rq *http.Request) {
-		handler.EditStudentClass(w, rq)
-	})
-	// update_student_class handling.
-	http.HandleFunc("/teacher/update_student_class", func(w http.ResponseWriter, rq *http.Request) {
-		handler.UpdateStudentClass(w, rq)
-	})
-	// edit_student_name_password handler.
-	http.HandleFunc("/teacher/edit_student_name_password", func(w http.ResponseWriter, rq *http.Request) {
-		handler.EditStudentNameAndPassword(w, rq)
-	})
-	// delete_teacher handling.
-	http.HandleFunc("/teacher/delete_teacher", func(w http.ResponseWriter, rq *http.Request) {
-		handler.DeleteTeacher(w, rq)
-	})
-	// edit_teacher_name_password handler.
-	http.HandleFunc("/teacher/edit_teacher_name_password", func(w http.ResponseWriter, rq *http.Request) {
-		handler.EditTeacherNameAndPassword(w, rq)
-	})
-	// edit_form handling.
-	http.HandleFunc("/teacher/edit_form", func(w http.ResponseWriter, rq *http.Request) {
-		handler.EditForm(w, rq)
-	})
-	// create_form handling.
-	http.HandleFunc("/teacher/create_form", func(w http.ResponseWriter, rq *http.Request) {
-		handler.CreateForm(w, rq)
-	})
-	// delete_form handling.
-	http.HandleFunc("/teacher/delete_form", func(w http.ResponseWriter, rq *http.Request) {
-		handler.DeleteForm(w, rq)
-	})
-	// reserve
-	http.HandleFunc("/student/reserve", func(w http.ResponseWriter, rq *http.Request) {
-		handler.Reserve(w, rq)
-	})
-	http.ListenAndServe("", nil)
+const StudentPath = "/student"
+const TeacherPath = "/teacher"
 
+func DBContext() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		db, err := infra.ConnectDB()
+		if err != nil {
+			panic("failed to connect database")
+		}
+		c.Set("db", db)
+		c.Next()
+		err = db.Close()
+		if err != nil {
+			return
+		}
+	}
+}
+
+func SetupRouter() {
+	r := gin.Default()
+
+	r.Use(cors.Default())
+	r.Use(DBContext())
+	r.Use(util.SessionMiddleware(r))
+	//first page
+	r.GET("/", handler.Home)
+	//signup or login or logout
+	r.GET("/signup", handler.GetSignup)
+	r.POST("/signup", handler.PostSignup)
+	r.GET("/login", handler.GetLogin)
+	r.POST("/login", handler.PostLogin)
+	r.GET("/logout", handler.GetLogout)
+	//student
+	r.GET(StudentPath, handler.GetStudent)
+	r.GET(StudentPath+"/reserve", handler.GetReserve)
+	r.POST(StudentPath+"/reserve", handler.PostReserve)
+	//teacher
+	r.GET(TeacherPath, handler.GetTeacher)
+	r.POST(TeacherPath+"/delete_student", handler.PostDeleteStudent)
+	r.POST(TeacherPath+"/edit_student_class", handler.PostEditStudentClass)
+	r.POST(TeacherPath+"/update_student_class", handler.PostUpdateStudentClass)
+	r.GET(TeacherPath+"/edit_student_name_password", handler.GetEditStudentNameAndPassword)
+	r.POST(TeacherPath+"/edit_student_name_password", handler.PostEditStudentNameAndPassword)
+	r.GET(TeacherPath+"/delete_teacher", handler.GetDeleteTeacher)
+	r.GET(TeacherPath+"/edit_teacher_name_password", handler.GetEditTeacherNameAndPassword)
+	r.POST(TeacherPath+"/edit_teacher_name_password", handler.PostEditTeacherNameAndPassword)
+	r.GET(TeacherPath+"/edit_form", handler.GetEditForm)
+	r.POST(TeacherPath+"/edit_form", handler.PostEditForm)
+	r.GET(TeacherPath+"/create_form", handler.GetCreateForm)
+	r.POST(TeacherPath+"/create_form", handler.PostCreateForm)
+	r.GET(TeacherPath+"/delete_form", handler.GetDeleteForm)
+
+	err := r.Run("localhost:8080") // listen and serve on 0.0.0.0:8080
+	if err != nil {
+		return
+	}
 }

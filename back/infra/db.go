@@ -5,7 +5,6 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
-// ConnectDB function
 func ConnectDB() (*gorm.DB, error) {
 	db, err := gorm.Open("sqlite3", "data.sqlite3")
 	if err != nil {
