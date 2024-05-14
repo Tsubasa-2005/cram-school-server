@@ -2,11 +2,11 @@ package handler
 
 import (
 	"cram-school-reserve-server/front/pkg"
-	"log"
-	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
-func Home(w http.ResponseWriter) {
+func Home(c *gin.Context) {
 	item := struct {
 		Title   string
 		Message string
@@ -19,9 +19,8 @@ func Home(w http.ResponseWriter) {
 		ID:      "login",
 	}
 
-	er := pkg.Page("home").Execute(w, item)
+	er := pkg.Page("home").Execute(c.Writer, item)
 	if er != nil {
-		log.Fatal(er)
+		return
 	}
-	return
 }
