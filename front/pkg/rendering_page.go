@@ -3,7 +3,8 @@ package pkg
 import (
 	dbpkg "cram-school-reserve-server/back/infra/rdb"
 
-	"github.com/gorilla/sessions"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
 	"net/http"
@@ -11,25 +12,20 @@ import (
 	"unicode"
 )
 
-var dbDriver = "sqlite3"
-var dbName = "data.sqlite3"
-
-var SesName = "cram_school_session"
-var Cs = sessions.NewCookieStore([]byte("secret"))
-
-func CheckLogin(w http.ResponseWriter, rq *http.Request) interface{} {
-	ses, _ := Cs.Get(rq, SesName)
-	if ses.Values["login"] == nil || !ses.Values["login"].(bool) {
-		http.Redirect(w, rq, "/login", 302)
+func CheckLogin(c *gin.Context) interface{} {
+	ses := c.MustGet("session").(sessions.Session)
+	loginValue := ses.Get("login")
+	if loginValue == nil || !loginValue.(bool) {
+		c.Redirect(http.StatusFound, "/login")
 		return nil
 	}
 	ac := ""
-	if ses.Values["account"] != nil {
-		ac = ses.Values["account"].(string)
+	accountValue := ses.Get("account")
+	if accountValue != nil {
+		ac = accountValue.(string)
 	}
 
-	db, _ := gorm.Open(dbDriver, dbName)
-	defer db.Close()
+	db := c.MustGet("db").(*gorm.DB)
 
 	firstRune := rune(ac[0])
 	if unicode.IsLetter(firstRune) {

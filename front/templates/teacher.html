@@ -276,7 +276,7 @@
         {{ end }}
         </table>
         <button id="bulkEditButton" type="submit" class="btn btn-primary btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/edit_student_class')">まとめてコマ変更</button>
-        <button id="bulkDeleteButton" type="submit" class="btn btn-danger btn-block" style="display: none;" disabled onclick="if(confirmDelete(event)) setFormAction('/teacher/delete_student')">まとめて削除</button>
+        <button id="bulkDeleteButton" type="submit" class="btn btn-danger btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/delete_student'); return confirmDelete(event);">まとめて削除</button>
     </form>
     <h5>1次募集編集</h5>
     {{ if .Err1 }}

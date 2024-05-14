@@ -1,16 +1,14 @@
 package rdb
 
 import (
-	"cram-school-reserve-server/back/infra"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 )
 
-func Reserve(reservation Reservation) error {
-	db, err := infra.ConnectDB()
-	if err != nil {
-		return err
-	}
-	defer db.Close()
+func Reserve(c *gin.Context, reservation Reservation) error {
+	db := c.MustGet("db").(*gorm.DB)
 
 	if err := db.Create(&reservation).Error; err != nil {
 		return err
@@ -18,12 +16,8 @@ func Reserve(reservation Reservation) error {
 	return nil
 }
 
-func DeleteReservationByFormIDAndStudentID(FormID int, StudentID string) error {
-	db, err := infra.ConnectDB()
-	if err != nil {
-		return err
-	}
-	defer db.Close()
+func DeleteReservationByFormIDAndStudentID(c *gin.Context, FormID int, StudentID string) error {
+	db := c.MustGet("db").(*gorm.DB)
 
 	if err := db.Where("form_id = ? AND student_id = ?", FormID, StudentID).Unscoped().Delete(&Reservation{}).Error; err != nil {
 		return err
@@ -31,12 +25,8 @@ func DeleteReservationByFormIDAndStudentID(FormID int, StudentID string) error {
 	return nil
 }
 
-func DeleteReservation() error {
-	db, err := infra.ConnectDB()
-	if err != nil {
-		return err
-	}
-	defer db.Close()
+func DeleteReservation(c *gin.Context) error {
+	db := c.MustGet("db").(*gorm.DB)
 
 	Date := time.Now().Format("2006-01-02")
 
@@ -46,12 +36,8 @@ func DeleteReservation() error {
 	return nil
 }
 
-func DeleteReservationCompletely() error {
-	db, err := infra.ConnectDB()
-	if err != nil {
-		return err
-	}
-	defer db.Close()
+func DeleteReservationCompletely(c *gin.Context) error {
+	db := c.MustGet("db").(*gorm.DB)
 
 	Date := time.Now().AddDate(0, -6, 0).Format("2006-01-02")
 
