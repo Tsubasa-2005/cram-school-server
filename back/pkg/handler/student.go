@@ -112,19 +112,23 @@ func PostDeleteStudent(c *gin.Context) {
 		return
 	}
 
-	studentIDs := c.PostFormArray("student_id")
-	log.Println(studentIDs)
-
-	// Delete the student record from the database.
-	for _, studentID := range studentIDs {
-		log.Println(studentID)
-		err := rdb.DeleteStudent(c, studentID)
-		if err != nil {
-			http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	studentIDs := c.PostFormArray("any_student_id")
+	if len(studentIDs) == 0 {
+		studentIDs = c.PostFormArray("student_id")
 	}
 
+	for _, studentID := range studentIDs {
+		studentID = strings.Trim(studentID, "[]")
+		splitData := strings.Split(studentID, " ")
+		for _, element := range splitData {
+			studentID = element
+			err := rdb.DeleteStudent(c, studentID)
+			if err != nil {
+				http.Error(c.Writer, "Failed update student class", http.StatusBadRequest)
+				return
+			}
+		}
+	}
 	c.Redirect(http.StatusSeeOther, "/teacher")
 }
 
@@ -140,8 +144,10 @@ func PostEditStudentClass(c *gin.Context) {
 		return
 	}
 
-	studentIDs := c.PostFormArray("student_id")
-	log.Println(studentIDs)
+	studentIDs := c.PostFormArray("any_student_id")
+	if len(studentIDs) == 0 {
+		studentIDs = c.PostFormArray("student_id")
+	}
 	var studentNames []string
 	for _, id := range studentIDs {
 		student, err := rdb.GetStudent(c, id)
@@ -223,17 +229,18 @@ func PostUpdateStudentClass(c *gin.Context) {
 		http.Error(c.Writer, "Invalid min third class value", http.StatusBadRequest)
 		return
 	}
-	log.Println(studentIDs)
 
 	// Update the student record in the database.
 	for _, studentID := range studentIDs {
 		studentID = strings.Trim(studentID, "[]")
-		log.Println(studentID)
-		log.Println(maxFirstClass, minFirstClass, maxSecondClass, minSecondClass, maxThirdClass, minThirdClass)
-		err := rdb.EditStudentClass(c, studentID, maxFirstClass, minFirstClass, maxSecondClass, minSecondClass, maxThirdClass, minThirdClass, c.Writer)
-		if err != nil {
-			http.Error(c.Writer, "Failed update student class", http.StatusBadRequest)
-			return
+		splitData := strings.Split(studentID, " ")
+		for _, element := range splitData {
+			studentID = element
+			err := rdb.EditStudentClass(c, studentID, maxFirstClass, minFirstClass, maxSecondClass, minSecondClass, maxThirdClass, minThirdClass, c.Writer)
+			if err != nil {
+				http.Error(c.Writer, "Failed update student class", http.StatusBadRequest)
+				return
+			}
 		}
 	}
 

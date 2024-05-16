@@ -11,23 +11,19 @@ import (
 
 func GetTeacher(c *gin.Context) {
 	user := pkg.CheckLogin(c)
-	log.Println("GetTeacher 111")
 	if user == nil {
 		// Handle error here
 		return
 	}
-	log.Println("GetTeacher 1")
 	teacherUser, ok := user.(*rdb.Teacher)
 	if !ok {
 		// Handle error here
 		return
 	}
-	log.Println("GetTeacher 11")
 	teachers, err := rdb.GetAllTeachers(c)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("GetTeacher 2")
 	students, err := rdb.GetAllStudents(c)
 	if err != nil {
 		log.Fatal(err)
