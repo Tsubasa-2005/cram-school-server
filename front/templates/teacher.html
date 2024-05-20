@@ -316,6 +316,26 @@
         </tr>
         {{ end }}
     </table>
+    <h5>1次募集予約出力</h5>
+    {{ if .Err1 }}
+    <a class="btn btn-primary btn-sm edit-class">1次募集フォームを作ってください</a>
+    {{ else }}
+    <a href="/teacher/download_reservations?form_id=1" class="btn btn-danger btn-sm edit-class">1次募集予約をダウンロード</a>
+    {{ end }}
+    <h5>2次募集予約出力</h5>
+    {{ if .Err2 }}
+    <a class="btn btn-primary btn-sm edit-class">2次募集フォームを作ってください</a>
+    {{ else }}
+    <a href="/teacher/download_reservations?form_id=2" class="btn btn-danger btn-sm edit-class">2次募集予約をダウンロード</a>
+    {{ end }}
+    <h5>3次募集予約出力</h5>
+    {{ if .Err3 }}
+    <a class="btn btn-primary btn-sm edit-class">3次募集フォームを作ってください</a>
+    {{ else }}
+    <a href="/teacher/download_reservations?form_id=3" class="btn btn-danger btn-sm edit-class">3次募集予約をダウンロード</a>
+    {{ end }}
+    <h5>全ての予約を出力</h5>
+    <a href="/teacher/download_all_reservations" class="btn btn-danger btn-sm edit-class">全ての予約をダウンロード</a>
 </div>
 {{ template "footer" .}}
 <script>
