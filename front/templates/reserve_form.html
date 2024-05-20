@@ -85,8 +85,11 @@
     }
 </style>
 <h4>{{ .Message }}</h4>
-<form method="POST" action="/student/reserve?form_id={{ .Form.ID }}">
+<form method="POST" action="/student/reserve?form_id={{ .Form.ID }}" onsubmit="check_checkboxes">
     <h5>{{ .Form.Name }}</h5>
+    <p>{{ .Min }}~{{ .Max }}コマで予約できます</p>
+    <div class="min-min-element" min="{{ .Min }}"></div>
+    <div class="min-max-element" max="{{ .Max }}"></div>
     <div class="table-container">
     <table class="styled-table">
         <div class="table-container">
@@ -108,11 +111,86 @@
         </div>
         <tbody>
         {{ range .Dates }}
+        {{ if .ExceptionDay }}
+        {{ template "exceptionReserveFormTable" . }}
+        {{ else }}
         {{ template "reserveFormTable" . }}
+        {{ end }}
         {{ end }}
         </tbody>
     </table>
     </div>
     <input type="submit" value="Submit">
 </form>
+{{ range .Dates }}
+    {{ $date := .Date }}
+    {{ range $_, $time := .Time }}
+        <div class="time-element" data-date-time="{{ $date }}_{{ $time }}"></div>
+    {{ end }}
+    {{ range $_, $firstreservedtime := .FirstReserved }}
+        <div class="time-element" data-first-reserved-date-time="{{ $date }}_{{ $firstreservedtime }}"></div>
+    {{ end }}
+    {{ range $_, $secondreservedtime := .FirstReserved }}
+        <div class="time-element" data-second-reservd-date-time="{{ $date }}_{{ $secondreservedtime }}"></div>
+    {{ end }}
+{{ end }}
+<script>
+    document.querySelectorAll('.time-element').forEach((element) => {
+        let date_time = element.getAttribute('data-date-time');
+        let first_reserved_date_time = element.getAttribute('data-first-reserved-date-time');
+        let second_reserved_date_time = element.getAttribute('data-second-reserved-date-time');
+        let checkbox = document.querySelector(`input[class="${date_time}"]`);
+
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+        let first_reserved_checkbox = document.querySelector(`input[class="${first_reserved_date_time}"]`);
+        let second_reserved_checkbox = document.querySelector(`input[class="${second_reserved_date_time}"]`);
+        let first_reserved_label = document.querySelector(`label[class="${first_reserved_date_time}"]`);
+        let second_reserved_label = document.querySelector(`label[class="${second_reserved_date_time}"]`);
+        let first_reserved_p = document.querySelector(`p[class="${first_reserved_date_time}"]`);
+        let second_reserved_p = document.querySelector(`p[class="${second_reserved_date_time}"]`);
+        if (first_reserved_checkbox) {
+            first_reserved_label.style.display = 'none';
+            first_reserved_p.innerHTML = '予約済み';
+        }else if (second_reserved_checkbox) {
+            second_reserved_label.style.display = 'none';
+            second_reserved_p.innerHTML = '予約済み';
+        }
+    });
+
+
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        var messageContainer = document.querySelector('h4');
+        var submitButton = document.querySelector('input[type="submit"]');
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                var checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+                var checkedCount = checkedCheckboxes.length;
+
+                let minElement = document.querySelector('.min-min-element');
+                let maxElement = document.querySelector('.min-max-element');
+
+                let min = parseInt(minElement.getAttribute('min'));
+                let max = parseInt(maxElement.getAttribute('max'));
+
+                if (checkedCount < min) {
+                    var remaining = min - checkedCount;
+                    messageContainer.innerText = 'あと ' + remaining + ' 個選択してください';
+                    submitButton.disabled = true;
+                } else if (checkedCount > max) {
+                    checkbox.checked = false;
+                    var remaining = checkedCount - max;
+                    messageContainer.innerText = '上限です。';
+                    submitButton.disabled = false;
+                } else {
+                    var remaining = max - checkedCount;
+                    messageContainer.innerText = 'あと ' + remaining + ' 個選択できます';
+                    submitButton.disabled = false;
+                }
+            });
+        });
+
+</script>
 {{ template "footer" .}}

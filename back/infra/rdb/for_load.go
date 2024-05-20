@@ -71,14 +71,14 @@ func GetReservationsByFormIDAndStudentID(c *gin.Context, FormID int, StudentID s
 	return reservations, nil
 }
 
-func GetReservationByFormIDAndStudentIDAndDate(c *gin.Context, FormID int, StudentID string, Date string) (*Reservation, error) {
+func GetReservationByFormIDAndStudentIDAndDate(c *gin.Context, FormID int, StudentID string, Date string) ([]Reservation, error) {
 	db := c.MustGet("db").(*gorm.DB)
 
-	var reservation Reservation
+	var reservation []Reservation
 	if err := db.Where("form_id = ? AND student_id = ? AND date = ?", FormID, StudentID, Date).First(&reservation).Error; err != nil {
 		return nil, err
 	}
-	return &reservation, nil
+	return reservation, nil
 }
 
 func GetReservationByFormIDAndDate(c *gin.Context, FormID int, Date string) ([]Reservation, error) {

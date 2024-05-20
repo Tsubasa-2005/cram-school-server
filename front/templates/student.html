@@ -17,6 +17,59 @@
         background-color: #007bff;
         text-decoration: none;
     }
+    .edit-class {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px;
+        border-radius: 10px;
+        border: 2px solid #0056b3;
+        box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .edit-class:hover {
+        background-color: #0056b3;
+        border: 2px solid #007bff;
+        box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+    }
+
+    table td {
+        text-align: center;
+    }
+
+    table td div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+    input[type="checkbox"] {
+        appearance: none;
+        background-color: #fafafa;
+        border: 2px solid #808080; /* Change to desired border color */
+        padding: 10px;
+        border-radius: 3px;
+        display: inline-block;
+        position: relative;
+    }
+
+    input[type="checkbox"]:checked {
+        background-color: #808080; /* Change to desired background color */
+        border-color: #808080; /* Change to desired border color */
+    }
+
+    input[type="checkbox"]:checked:after {
+        content: '\2714';
+        position: absolute;
+        top: 0;
+        left: 0;
+        color: #fff;
+        font-size: 10px;
+        text-align: center;
+        width: 100%;
+    }
 </style>
 <h4>{{ .Message }}</h4>
 <p>student</p>
@@ -63,5 +116,7 @@
         <p>現在募集フォームは作られていません</p>
         {{ end }}
     </div>
+    <h5>全ての予約を出力</h5>
+    <a href="/student/download_reservations" class="btn btn-danger btn-sm edit-class">全ての予約をダウンロード</a>
 </div>
 {{ template "footer" .}}

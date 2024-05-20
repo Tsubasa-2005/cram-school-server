@@ -65,6 +65,12 @@ func GetStudent(c *gin.Context) {
 		startDate3 = ""
 		endDate3 = ""
 	}
+
+	// Get the form data from the database.
+	_, err1 := rdb.GetForm(c, 1)
+	_, err2 := rdb.GetForm(c, 2)
+	_, err3 := rdb.GetForm(c, 3)
+
 	item := struct {
 		Title                  string
 		Message                string
@@ -79,6 +85,9 @@ func GetStudent(c *gin.Context) {
 		IsWithinReservePeriod1 bool
 		IsWithinReservePeriod2 bool
 		IsWithinReservePeriod3 bool
+		Err1                   error
+		Err2                   error
+		Err3                   error
 	}{
 		Title:                  " ",
 		Message:                "生徒用ページへようこそ" + studentUser.Name + "さん。",
@@ -93,6 +102,9 @@ func GetStudent(c *gin.Context) {
 		IsWithinReservePeriod1: isWithinReservePeriod1,
 		IsWithinReservePeriod2: isWithinReservePeriod2,
 		IsWithinReservePeriod3: isWithinReservePeriod3,
+		Err1:                   err1,
+		Err2:                   err2,
+		Err3:                   err3,
 	}
 	er := pkg.Page("student").Execute(c.Writer, item)
 	if er != nil {

@@ -12,7 +12,7 @@ func DownloadExcel(formName string, c *gin.Context) {
 
 	// Excelファイルのパスを指定します。
 	// この例では、CreateExcel関数で作成したExcelファイルの名前とパスを指定します。
-	excelFilePath := "csvFiles/" + formName + "_reservations.xlsx"
+	excelFilePath := "xlsx/" + formName + "_reservations.xlsx"
 	downloadName := formName + "_reservations.xlsx"
 
 	// Excelファイルを開きます。
@@ -41,12 +41,12 @@ func DownloadExcel(formName string, c *gin.Context) {
 	}
 
 	// なぜかフォルダが削除されない。ファイルだけを指定しても削除されなかった。
-	//err = os.RemoveAll("csvFiles")
+	//err = os.RemoveAll("xlsx")
 	//if err != nil {
 	//	c.String(http.StatusInternalServerError, "Unable to delete the file: %v", err)
 	//	return
 	//}
-	//err = os.MkdirAll("csvFiless", 0755)
+	//err = os.MkdirAll("xlsx", 0755)
 	//if err != nil {
 	//	log.Fatalf("Failed to create directory: %v", err)
 	//}
