@@ -299,6 +299,73 @@
     <a href="/teacher/edit_form?form_id=3" class="btn btn-primary btn-sm edit-class">3次募集フォーム編集</a>
     <a href="/teacher/delete_form?form_id=3" class="btn btn-danger btn-sm edit-class" onclick="return confirm('フォームを削除するとこれまでに生徒が予約したデータも削除されますが削除しますか？');">3次募集フォーム削除</a>
     {{ end }}
+    <h5>予約フォーム情報</h5>
+    {{ if .Err1 }}
+    <p>1次募集フォームは、作成されていません。</p>
+    {{ else }}
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>フォームの名前</th>
+            <th>予約受付開始日</th>
+            <th>予約受付終了日</th>
+            <th>予約開始日</th>
+            <th>予約終了日</th>
+            <th>予約を受け付けない日</th>
+        </tr>
+        <tr>
+            <td>{{ .Form1.Name }}</td>
+            <td>{{ .Form1.ReserveStartDate }}</td>
+            <td>{{ .Form1.ReserveEndDate }}</td>
+            <td>{{ .Form1.StartDate }}</td>
+            <td>{{ .Form1.EndDate }}</td>
+            <td>{{ .Form1.ExceptionDate }}</td>
+        </tr>
+    </table>
+    {{ end }}
+    {{ if .Err2 }}
+    <p>2次募集フォームは、作成されていません。</p>
+    {{ else }}
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>フォームの名前</th>
+            <th>予約受付開始日</th>
+            <th>予約受付終了日</th>
+            <th>予約開始日</th>
+            <th>予約終了日</th>
+            <th>予約を受け付けない日</th>
+        </tr>
+        <tr>
+            <td>{{ .Form2.Name }}</td>
+            <td>{{ .Form2.ReserveStartDate }}</td>
+            <td>{{ .Form2.ReserveEndDate }}</td>
+            <td>{{ .Form2.StartDate }}</td>
+            <td>{{ .Form2.EndDate }}</td>
+            <td>{{ .Form2.ExceptionDate }}</td>
+        </tr>
+    </table>
+    {{ end }}
+    {{ if .Err3 }}
+    <p>3次募集フォームは、作成されていません。</p>
+    {{ else }}
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>フォームの名前</th>
+            <th>予約受付開始日</th>
+            <th>予約受付終了日</th>
+            <th>予約開始日</th>
+            <th>予約終了日</th>
+            <th>予約を受け付けない日</th>
+        </tr>
+        <tr>
+            <td>{{ .Form3.Name }}</td>
+            <td>{{ .Form3.ReserveStartDate }}</td>
+            <td>{{ .Form3.ReserveEndDate }}</td>
+            <td>{{ .Form3.StartDate }}</td>
+            <td>{{ .Form3.EndDate }}</td>
+            <td>{{ .Form3.ExceptionDate }}</td>
+        </tr>
+    </table>
+    {{ end }}
     <h5>Teachers</h5>
     <table class="table table-striped table-bordered">
         <tr>
