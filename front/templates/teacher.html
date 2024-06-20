@@ -48,14 +48,14 @@
         margin-right: 10px;
     }
     input[type="checkbox"] {
-            appearance: none;
-            background-color: #fafafa;
-            border: 2px solid #808080; /* Change to desired border color */
-            padding: 10px;
-            border-radius: 3px;
-            display: inline-block;
-            position: relative;
-        }
+        appearance: none;
+        background-color: #fafafa;
+        border: 2px solid #808080; /* Change to desired border color */
+        padding: 10px;
+        border-radius: 3px;
+        display: inline-block;
+        position: relative;
+    }
 
     input[type="checkbox"]:checked {
         background-color: #808080; /* Change to desired background color */
@@ -97,183 +97,183 @@
 
         <p>小1</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'a' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>小2</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'b' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>小3</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'c' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>小4</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'd' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>小5</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'e' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>小6</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'f' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>中1</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'g' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>中2</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'h' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>中3</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'i' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <p>その他の学年</p>
         <table class="table table-striped table-bordered">
-        <tr>
-            <th><div>生徒番号</div></th>
-            <th><div>名前</div></th>
-            <th><div>1次募集</div></th>
-            <th><div>2次募集</div></th>
-            <th><div>3次募集</div></th>
-            <th><div>コマ変更</div></th>
-            <th><div>削除</div></th>
-            <th><div>編集</div></th>
-        </tr>
-        {{ range $students }}
+            <tr>
+                <th><div>生徒番号</div></th>
+                <th><div>名前</div></th>
+                <th><div>1次募集</div></th>
+                <th><div>2次募集</div></th>
+                <th><div>3次募集</div></th>
+                <th><div>コマ変更</div></th>
+                <th><div>削除</div></th>
+                <th><div>編集</div></th>
+            </tr>
+            {{ range $students }}
             {{ if eq (index .ID 0) 'j' }}
-                {{ template "studentTable" . }}
+            {{ template "studentTable" . }}
             {{ end }}
-        {{ end }}
+            {{ end }}
         </table>
         <button id="bulkEditButton" type="submit" class="btn btn-primary btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/edit_student_class')">まとめてコマ変更</button>
         <button id="bulkDeleteButton" type="submit" class="btn btn-danger btn-block" style="display: none;" disabled onclick="setFormAction('/teacher/delete_student'); return confirmDelete(event);">まとめて削除</button>

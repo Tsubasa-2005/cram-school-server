@@ -41,6 +41,6 @@ func CheckLogin(c *gin.Context) interface{} {
 
 func Page(fname string) *template.Template {
 	tmps, _ := template.ParseFiles("front/templates/"+fname+".html",
-		"front/templates/head.html", "front/templates/foot.html", "front/templates/student_table.html", "front/templates/reserve_form_table.html")
+		"front/templates/exceptionReserveFormTable.html", "front/templates/head.html", "front/templates/foot.html", "front/templates/student_table.html", "front/templates/reserve_form_table.html")
 	return tmps
 }

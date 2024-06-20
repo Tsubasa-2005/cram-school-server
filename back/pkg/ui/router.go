@@ -63,6 +63,7 @@ func SetupRouter() {
 	//output
 	r.GET(TeacherPath+"/download_reservations", handler.GetCreateCSVForOneForm)
 	r.GET(TeacherPath+"/download_all_reservations", handler.GetCreateCSVForAllForms)
+	r.GET(StudentPath+"/download_reservations", handler.GetCreateCSVForOneStudent)
 	err := r.Run("localhost:8080") // listen and serve on 0.0.0.0:8080
 	if err != nil {
 		return

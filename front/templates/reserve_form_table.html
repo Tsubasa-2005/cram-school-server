@@ -1,67 +1,77 @@
 {{define "reserveFormTable"}}
 <tr>
     <td>
-        <div>{{ . }}</div>
+        <div class="date-element" data-date="{{ .Date }}">{{ .Date }}</div>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_0" name="reserve" value="{{ . }}_{{ 0 }}">
-            <label for="reserveCheckbox{{ . }}_0"></label>
+            <input type="checkbox" class="{{ .Date }}_0" id="0" name="reserve" value="{{ .Date }}_{{ 0 }}">
+            <label class="{{ .Date }}_0" for="0"></label>
         </div>
+        <p class="{{ .Date }}_0"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_1" name="reserve" value="{{ . }}_{{ 1 }}">
-            <label for="reserveCheckbox{{ . }}_1"></label>
+            <input type="checkbox" class="{{ .Date }}_1" id="reserveCheckbox{{ .Date }}_1" name="reserve" value="{{ .Date }}_{{ 1 }}">
+            <label class="{{ .Date }}_1" for="reserveCheckbox{{ .Date }}_1"></label>
         </div>
+        <p class="{{ .Date }}_1"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_2" name="reserve" value="{{ . }}_{{ 2 }}">
-            <label for="reserveCheckbox{{ . }}_2"></label>
+            <input type="checkbox" class="{{ .Date }}_2" id="reserveCheckbox{{ .Date }}_2" name="reserve" value="{{ .Date }}_{{ 2 }}">
+            <label class="{{ .Date }}_2" for="reserveCheckbox{{ .Date }}_2"></label>
         </div>
+        <p class="{{ .Date }}_2"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_3" name="reserve" value="{{ . }}_{{ 3 }}">
-            <label for="reserveCheckbox{{ . }}_3"></label>
+            <input type="checkbox" class="{{ .Date }}_3" id="reserveCheckbox{{ .Date }}_3" name="reserve" value="{{ .Date }}_{{ 3 }}">
+            <label class="{{ .Date }}_3" for="reserveCheckbox{{ .Date }}_3"></label>
         </div>
+        <p class="{{ .Date }}_3"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_4" name="reserve" value="{{ . }}_{{ 4 }}">
-            <label for="reserveCheckbox{{ . }}_4"></label>
+            <input type="checkbox" class="{{ .Date }}_4" id="reserveCheckbox{{ .Date }}_4" name="reserve" value="{{ .Date }}_{{ 4 }}">
+            <label class="{{ .Date }}_4" for="reserveCheckbox{{ .Date }}_4"></label>
         </div>
+        <p class="{{ .Date }}_4"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_5" name="reserve" value="{{ . }}_{{ 5 }}">
-            <label for="reserveCheckbox{{ . }}_5"></label>
+            <input type="checkbox" class="{{ .Date }}_5" id="reserveCheckbox{{ .Date }}_5" name="reserve" value="{{ .Date }}_{{ 5 }}">
+            <label class="{{ .Date }}_5" for="reserveCheckbox{{ .Date }}_5"></label>
         </div>
+        <p class="{{ .Date }}_5"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_6" name="reserve" value="{{ . }}_{{ 6 }}">
-            <label for="reserveCheckbox{{ . }}_6"></label>
+            <input type="checkbox" class="{{ .Date }}_6" id="reserveCheckbox{{ .Date }}_6" name="reserve" value="{{ .Date }}_{{ 6 }}">
+            <label class="{{ .Date }}_6" for="reserveCheckbox{{ .Date }}_6"></label>
         </div>
+        <p class="{{ .Date }}_6"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_7" name="reserve" value="{{ . }}_{{ 7 }}">
-            <label for="reserveCheckbox{{ . }}_7"></label>
+            <input type="checkbox" class="{{ .Date }}_7" id="reserveCheckbox{{ .Date }}_7" name="reserve" value="{{ .Date }}_{{ 7 }}">
+            <label class="{{ .Date }}_7" for="reserveCheckbox{{ .Date }}_7"></label>
         </div>
+        <p class="{{ .Date }}_7"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_8" name="reserve" value="{{ . }}_{{ 8 }}">
-            <label for="reserveCheckbox{{ . }}_8"></label>
+            <input type="checkbox" class="{{ .Date }}_8" id="reserveCheckbox{{ .Date }}_8" name="reserve" value="{{ .Date }}_{{ 8 }}">
+            <label class="{{ .Date }}_8" for="reserveCheckbox{{ .Date }}_8"></label>
         </div>
+        <p class="{{ .Date }}_8"></p>
     </td>
     <td>　
         <div>
-            <input type="checkbox" id="reserveCheckbox{{ . }}_9" name="reserve" value="{{ . }}_{{ 9 }}">
-            <label for="reserveCheckbox{{ . }}_9"></label>
+            <input type="checkbox" class="{{ .Date }}_9" id="reserveCheckbox{{ .Date }}_9" name="reserve" value="{{ .Date }}_{{ 9 }}">
+            <label class="{{ .Date }}_9" for="reserveCheckbox{{ .Date }}_9"></label>
         </div>
+        <p class="{{ .Date }}_9"></p>
     </td>
 </tr>
 {{end}}
