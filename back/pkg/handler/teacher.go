@@ -28,10 +28,20 @@ func GetTeacher(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// Get the form data from the database.
-	_, err1 := rdb.GetForm(c, 1)
-	_, err2 := rdb.GetForm(c, 2)
-	_, err3 := rdb.GetForm(c, 3)
+
+	form1, err1 := rdb.GetForm(c, 1)
+	if err1 != nil {
+		form1 = &rdb.Form{}
+	}
+	form2, err2 := rdb.GetForm(c, 2)
+	if err2 != nil {
+		form2 = &rdb.Form{}
+	}
+	form3, err3 := rdb.GetForm(c, 3)
+	if err3 != nil {
+		form3 = &rdb.Form{}
+	}
+
 	item := struct {
 		Title    string
 		Message  string
@@ -42,6 +52,9 @@ func GetTeacher(c *gin.Context) {
 		Err1     error
 		Err2     error
 		Err3     error
+		Form1    *rdb.Form
+		Form2    *rdb.Form
+		Form3    *rdb.Form
 	}{
 		Title:    "",
 		Message:  "教師用ページへようこそ" + teacherUser.Name + "さん。",
@@ -52,8 +65,11 @@ func GetTeacher(c *gin.Context) {
 		Err1:     err1,
 		Err2:     err2,
 		Err3:     err3,
+		Form1:    form1,
+		Form2:    form2,
+		Form3:    form3,
 	}
-	log.Println("GetTeacher 3")
+
 	er := pkg.Page("teacher").Execute(c.Writer, item)
 	if er != nil {
 		log.Fatal(er)
